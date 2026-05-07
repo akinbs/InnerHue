@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../core/constants/app_texts.dart';
 import '../../../core/theme/app_colors.dart';
+import '../widgets/app_gradient_background.dart';
+import '../widgets/aura_orb.dart';
 import 'onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -20,11 +22,11 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 900),
+      duration: const Duration(milliseconds: 1000),
     );
-    _fade = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
+    _fade = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
     _controller.forward();
-    Future.delayed(const Duration(milliseconds: 2200), _navigate);
+    Future.delayed(const Duration(milliseconds: 2400), _navigate);
   }
 
   void _navigate() {
@@ -32,10 +34,9 @@ class _SplashScreenState extends State<SplashScreen>
     Navigator.of(context).pushReplacement(
       PageRouteBuilder(
         pageBuilder: (_, _, _) => const OnboardingScreen(),
-        transitionsBuilder: (_, animation, _, child) {
-          return FadeTransition(opacity: animation, child: child);
-        },
-        transitionDuration: const Duration(milliseconds: 500),
+        transitionsBuilder: (_, animation, _, child) =>
+            FadeTransition(opacity: animation, child: child),
+        transitionDuration: const Duration(milliseconds: 600),
       ),
     );
   }
@@ -50,26 +51,48 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: Center(
-        child: FadeTransition(
-          opacity: _fade,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                AppTexts.appName,
-                style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                  color: AppColors.primaryNeon,
-                  letterSpacing: 6,
-                ),
+      body: AppGradientBackground(
+        child: Center(
+          child: FadeTransition(
+            opacity: _fade,
+            child: SizedBox(
+              width: double.infinity,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  // Ambient orb behind text
+                  const AuraOrb(
+                    color: AppColors.primaryNeon,
+                    size: 220,
+                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        AppTexts.appName,
+                        style: TextStyle(
+                          color: AppColors.textPrimary,
+                          fontSize: 38,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 5,
+                        ),
+                      ),
+                      const SizedBox(height: 14),
+                      Text(
+                        AppTexts.splashTagline,
+                        style: const TextStyle(
+                          color: AppColors.textMuted,
+                          fontSize: 13,
+                          letterSpacing: 0.3,
+                          height: 1.5,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              const SizedBox(height: 16),
-              Text(
-                AppTexts.splashTagline,
-                style: Theme.of(context).textTheme.bodyMedium,
-                textAlign: TextAlign.center,
-              ),
-            ],
+            ),
           ),
         ),
       ),

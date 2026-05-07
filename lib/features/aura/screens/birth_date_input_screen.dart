@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../logic/zodiac_aura_engine.dart';
 import '../models/name_aura_result.dart';
+import '../widgets/app_gradient_background.dart';
 import '../widgets/app_primary_button.dart';
 import '../widgets/birth_date_input_card.dart';
-import 'home_screen.dart';
+import 'nationality_input_screen.dart';
 
 class BirthDateInputScreen extends StatefulWidget {
   final NameAuraResult nameResult;
@@ -32,11 +33,11 @@ class _BirthDateInputScreenState extends State<BirthDateInputScreen> {
             colorScheme: const ColorScheme.dark(
               primary: AppColors.primaryNeon,
               onPrimary: AppColors.textPrimary,
-              surface: AppColors.surface,
+              surface: AppColors.surfaceElevated,
               onSurface: AppColors.textPrimary,
             ),
             dialogTheme: const DialogThemeData(
-              backgroundColor: AppColors.background,
+              backgroundColor: AppColors.surfaceSecondary,
             ),
           ),
           child: child!,
@@ -53,15 +54,14 @@ class _BirthDateInputScreenState extends State<BirthDateInputScreen> {
 
   void _onSubmit() {
     if (_selectedDate == null) {
-      setState(() => _errorText = 'Devam etmek için doğum tarihini seçmelisin.');
+      setState(
+          () => _errorText = 'Devam etmek için doğum tarihini seçmelisin.');
       return;
     }
-
     final zodiacResult = ZodiacAuraEngine.analyze(_selectedDate!);
-
     Navigator.of(context).push(
       PageRouteBuilder(
-        pageBuilder: (_, _, _) => HomeScreen(
+        pageBuilder: (_, _, _) => NationalityInputScreen(
           nameResult: widget.nameResult,
           zodiacResult: zodiacResult,
         ),
@@ -76,39 +76,37 @@ class _BirthDateInputScreenState extends State<BirthDateInputScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 40),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Spacer(),
-              Text(
-                'Doğum tarihinle devam edelim',
-                style: Theme.of(context).textTheme.headlineLarge,
-              ),
-              const SizedBox(height: 16),
-              Text(
-                'Burç katmanı, doğum tarihinden gelen sembolik bir renk '
-                'filtresidir. Bu bir astrolojik kesinlik veya kişilik analizi '
-                'değildir.',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  height: 1.7,
+      body: AppGradientBackground(
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 56),
+                Text(
+                  'Doğum tarihinle\ndevam edelim',
+                  style: Theme.of(context).textTheme.headlineLarge,
                 ),
-              ),
-              const SizedBox(height: 36),
-              BirthDateInputCard(
-                selectedDate: _selectedDate,
-                errorText: _errorText,
-                onTap: _pickDate,
-              ),
-              const Spacer(flex: 2),
-              AppPrimaryButton(
-                label: 'Burç Katmanını Oluştur',
-                onPressed: _onSubmit,
-              ),
-              const SizedBox(height: 16),
-            ],
+                const SizedBox(height: 12),
+                Text(
+                  'Burç katmanı, spektrumuna sembolik bir renk yönü ekler.',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(height: 32),
+                BirthDateInputCard(
+                  selectedDate: _selectedDate,
+                  errorText: _errorText,
+                  onTap: _pickDate,
+                ),
+                const Spacer(),
+                AppPrimaryButton(
+                  label: 'Burç Katmanını Oluştur',
+                  onPressed: _onSubmit,
+                ),
+                const SizedBox(height: 28),
+              ],
+            ),
           ),
         ),
       ),

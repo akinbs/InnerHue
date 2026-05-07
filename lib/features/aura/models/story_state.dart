@@ -1,3 +1,5 @@
+import 'aura_option.dart';
+import 'aura_scene.dart';
 import 'axis_delta.dart';
 
 class StoryState {
@@ -19,15 +21,11 @@ class StoryState {
     );
   }
 
-  StoryState addSelection({
-    required String optionId,
-    required AxisDelta axisDelta,
-    List<String>? tagsToWrite,
-  }) {
-    final updatedIds = [...selectedOptionIds, optionId];
-    final updatedAxis = accumulatedAxisDelta + axisDelta;
+  StoryState addSelection(AuraScene scene, AuraOption option) {
+    final updatedIds = [...selectedOptionIds, option.id];
+    final updatedAxis = accumulatedAxisDelta + option.axisDelta;
     final updatedTags = Map<String, bool>.from(worldTags);
-    for (final tag in tagsToWrite ?? const <String>[]) {
+    for (final tag in option.tags ?? const <String>[]) {
       updatedTags[tag] = true;
     }
     return StoryState(

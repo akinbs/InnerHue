@@ -138,22 +138,22 @@ class ZodiacAuraEngine {
   }
 
   static RgbDelta _getElementDelta(ZodiacElement element) => switch (element) {
-        ZodiacElement.fire  => const RgbDelta(red: 28, green: 4, blue: -4),
-        ZodiacElement.earth => const RgbDelta(red: 4, green: 28, blue: 4),
-        ZodiacElement.air   => const RgbDelta(red: 6, green: 8, blue: 26),
-        ZodiacElement.water => const RgbDelta(red: -2, green: 8, blue: 30),
+        ZodiacElement.fire  => const RgbDelta(red: -66, green:  -8, blue:  20),
+        ZodiacElement.earth => const RgbDelta(red:  -8, green: -66, blue:  -8),
+        ZodiacElement.air   => const RgbDelta(red: -10, green: -16, blue: -65),
+        ZodiacElement.water => const RgbDelta(red:  18, green: -16, blue: -72),
       };
 
   static RgbDelta _getModalityDelta(ZodiacModality modality) =>
       switch (modality) {
-        ZodiacModality.cardinal => const RgbDelta(red: 12, green: 2, blue: 2),
-        ZodiacModality.fixed    => const RgbDelta(red: 4, green: 12, blue: 2),
-        ZodiacModality.mutable  => const RgbDelta(red: 2, green: 4, blue: 12),
+        ZodiacModality.cardinal => const RgbDelta(red: -27, green:  -5, blue:  -5),
+        ZodiacModality.fixed    => const RgbDelta(red:  -9, green: -27, blue:  -5),
+        ZodiacModality.mutable  => const RgbDelta(red:  -5, green:  -9, blue: -27),
       };
 
   static RgbDelta _getPolarityDelta(ZodiacPolarity polarity) =>
       switch (polarity) {
-        ZodiacPolarity.active     => const RgbDelta(red: 6, green: 0, blue: 4),
-        ZodiacPolarity.reflective => const RgbDelta(red: 0, green: 6, blue: 4),
+        ZodiacPolarity.active     => const RgbDelta(red: -14, green:   0, blue:  -9),
+        ZodiacPolarity.reflective => const RgbDelta(red:   0, green: -14, blue:  -9),
       };
 }

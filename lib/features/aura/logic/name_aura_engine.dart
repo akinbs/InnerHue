@@ -146,44 +146,44 @@ class NameAuraEngine {
       if (!_vowels.contains(c)) continue;
 
       // Kalın/arka: a ı o u
-      if (c == 'a' || c == 'ı' || c == 'o' || c == 'u') r += 2;
+      if (c == 'a' || c == 'ı' || c == 'o' || c == 'u') r -= 5;
       // İnce/ön: e i ö ü
-      if (c == 'e' || c == 'i' || c == 'ö' || c == 'ü') b += 2;
+      if (c == 'e' || c == 'i' || c == 'ö' || c == 'ü') b -= 5;
       // Yuvarlak: o ö u ü
-      if (c == 'o' || c == 'ö' || c == 'u' || c == 'ü') g += 2;
-      // Düz — a,ı → R+1; e,i → B+1
-      if (c == 'a' || c == 'ı') r += 1;
-      if (c == 'e' || c == 'i') b += 1;
+      if (c == 'o' || c == 'ö' || c == 'u' || c == 'ü') g -= 5;
+      // Düz — a,ı → R-3; e,i → B-3
+      if (c == 'a' || c == 'ı') r -= 3;
+      if (c == 'e' || c == 'i') b -= 3;
       // Geniş: a e o ö
-      if (c == 'a' || c == 'e' || c == 'o' || c == 'ö') g += 1;
+      if (c == 'a' || c == 'e' || c == 'o' || c == 'ö') g -= 3;
       // Dar: ı i u ü
-      if (c == 'ı' || c == 'i' || c == 'u' || c == 'ü') b += 1;
+      if (c == 'ı' || c == 'i' || c == 'u' || c == 'ü') b -= 3;
     }
 
     return RgbDelta(red: r.round(), green: g.round(), blue: b.round());
   }
 
   static RgbDelta _calculateVowelRatioScore(double ratio) {
-    if (ratio < 0.20) return const RgbDelta(red: 8, green: 0, blue: 5);
-    if (ratio < 0.40) return const RgbDelta(red: 5, green: 3, blue: 0);
-    if (ratio <= 0.60) return const RgbDelta(red: 0, green: 8, blue: 0);
-    return const RgbDelta(red: 0, green: 5, blue: 7);
+    if (ratio < 0.20) return const RgbDelta(red: -19, green: 0, blue: -12);
+    if (ratio < 0.40) return const RgbDelta(red: -12, green: -8, blue: 0);
+    if (ratio <= 0.60) return const RgbDelta(red: 0, green: -19, blue: 0);
+    return const RgbDelta(red: 0, green: -12, blue: -16);
   }
 
   static RgbDelta _calculateLengthScore(int count) {
-    if (count <= 1) return const RgbDelta(red: 4, green: 0, blue: 2);
-    if (count <= 3) return const RgbDelta(red: 10, green: 0, blue: 2);
-    if (count <= 5) return const RgbDelta(red: 6, green: 4, blue: 0);
-    if (count <= 7) return const RgbDelta(red: 0, green: 8, blue: 3);
-    if (count <= 10) return const RgbDelta(red: 0, green: 4, blue: 8);
-    return const RgbDelta(red: 4, green: 0, blue: 10);
+    if (count <= 1) return const RgbDelta(red: -9, green: 0, blue: -5);
+    if (count <= 3) return const RgbDelta(red: -24, green: 0, blue: -5);
+    if (count <= 5) return const RgbDelta(red: -14, green: -9, blue: 0);
+    if (count <= 7) return const RgbDelta(red: 0, green: -18, blue: -8);
+    if (count <= 10) return const RgbDelta(red: 0, green: -9, blue: -19);
+    return const RgbDelta(red: -9, green: 0, blue: -24);
   }
 
   // Each special Turkish char contributes G+2, B+2 (capped at +8 each)
   static RgbDelta _calculateTurkishCharacterScore(List<String> allLetters) {
     final count = allLetters.where((c) => _turkishSpecial.contains(c)).length;
-    final bonus = math.min(count * 2, 8);
-    return RgbDelta(red: 0, green: bonus, blue: bonus);
+    final bonus = math.min(count * 5, 22);
+    return RgbDelta(red: 0, green: -bonus, blue: -bonus);
   }
 
   static RgbDelta _calculateMeaningScore(List<String> tagIds) {

@@ -25,9 +25,9 @@ class StoryScoreEngine {
       raw.threshold / AppConstants.thresholdMax, -1.0, 1.0,
     );
 
-    final rStory = (38 * a + 14 * t - 12 * r + 6 * o).round();
-    final gStory = (36 * g + 12 * o + 10 * t - 10 * a).round();
-    final bStory = (40 * r + 14 * o - 12 * t + 4 * g).round();
+    final rStory = (-82 * a - 30 * t + 25 * r - 13 * o).round();
+    final gStory = (-78 * g - 25 * o - 21 * t + 21 * a).round();
+    final bStory = (-87 * r - 30 * o + 25 * t - 9 * g).round();
 
     return RgbDelta(
       red: ClampUtils.clampInt(rStory, -AppConstants.storyDeltaClamp, AppConstants.storyDeltaClamp),
